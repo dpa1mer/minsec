@@ -43,8 +43,12 @@ A_II = 0.5 * (A_II + A_II'); % for good measure
 cholA_II = decomposition(A_II, 'chol', 'lower');
 
 if tauMult <= 0
-    z_I = cholA_II \ (-A_IB * z_B);
-    z = Int' * z_I + Bdry' * z_B;
+    if meshData.nb > 0
+        z_I = cholA_II \ (-A_IB * z_B);
+        z = Int' * z_I + Bdry' * z_B;
+    else
+        [z, ~] = eigs(L_cov, M_cov, 1, 'smallestabs');
+    end
     abs_z = abs(z);
     z = z ./ abs_z;
 else
