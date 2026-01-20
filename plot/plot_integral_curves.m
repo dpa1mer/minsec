@@ -73,8 +73,7 @@ paths = [permute(paths, [3 1 2]); nan(1, ncurves, 3)];
 cmap = cbrewer('Paired', 8);
 color_ix = repmat(randi(8, [size(paths, 1), 1]), 1, size(paths, 2)).';
 colors = reshape(cmap(color_ix, :), [], 3);
-hdl.FaceVertexCData = colors;
-hdl = patch(paths(:, :, 1), paths(:, :, 2), paths(:, :, 3), LineWidth=2, ...
+hdl = patch(XData=paths(:, :, 1), YData=paths(:, :, 2), ZData=paths(:, :, 3), LineWidth=2, ...
     EdgeColor="interp", FaceVertexCData=colors);
 
 % Returns interpolation of the directional field component best matching old velocity
