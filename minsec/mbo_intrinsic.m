@@ -19,6 +19,13 @@ G_cov = G_intr * V2F;
 Area = kron(spdiags(meshData.areas, 0, nf, nf), speye(2));
 L_cov = G_cov' * Area * G_cov;
 
+% for good measure
+M_cov = 0.5 * (M_cov + M_cov'); 
+assert(ishermitian(M_cov));
+L_cov = 0.5 * (L_cov + L_cov');
+assert(ishermitian(L_cov));
+
+
 %% Set up boundary conditions
 [~, z_B] = field_bdry_conds(meshData, degree);
 
