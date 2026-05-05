@@ -8,6 +8,7 @@ arguments
     options.ColorMap          (:, :) double = inferno
     options.BackgroundSurface (1, 1) logical = true
     options.NormalShift       (1, 1) double = 0
+    options.ShowArrowHead     (1, 1) logical = false
 end
 
 if size(v, 1) == meshData.nf
@@ -33,6 +34,6 @@ v = squeeze(pagemtimes(frames, reshape(v, 2, 1, degree * nPts))).';
 if options.BackgroundSurface
     trisurf(meshData.tri, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on;
 end
-qvr = fancy_quiver(pts, v, options.ColorMap, 0, ShowArrowHead=false);
+qvr = fancy_quiver(pts, v, options.ColorMap, 0, ShowArrowHead=options.ShowArrowHead);
 
 end
