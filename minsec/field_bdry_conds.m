@@ -1,4 +1,4 @@
-function [bdryVertAngles, bdryVertPhases, BdryEdgeIntOp, bdryEdgeIntVal] = field_bdry_conds(meshData, degree)
+function [bdryVertAngles, bdryVertPhases, BdryEdgeIntOp, bdryEdgeIntVal, bdryFaces, bdryFacePhases] = field_bdry_conds(meshData, degree)
 
 nf = meshData.nf;
 nb = meshData.nb;
