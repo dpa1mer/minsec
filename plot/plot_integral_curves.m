@@ -12,7 +12,7 @@ nf = meshData.nf;
 verts = meshData.verts;
 faces = meshData.faces;
 
-G_intr = intrinsic_ops(meshData);
+[~, ~, ~, ~, grad_intr] = intrinsic_ops(meshData);
 V2F = covariant_ops(meshData, degree);
 
 face2face = spones(meshData.d1(:, meshData.face2edge)) - [speye(nf) speye(nf) speye(nf)];
@@ -93,8 +93,8 @@ function [bary_new, f_idx_new, vel_new, good_idx] = maxstep(bary, f_idx, vel)
     nheads = size(bary, 2);
 
     bary_local = full(bary(sub2ind([nv nheads], faces(f_idx, :), repmat((1:nheads).', 1, 3))));
-    d_bary = G_intr(2 * f_idx + (-1:0), 3 * f_idx + (-2:0))' * [real(vel); imag(vel)];
-    d_bary = reshape(d_bary, nheads, 3);
+    d_bary = pagemtimes(grad_intr(:, :, f_idx), 'transpose', permute([real(vel), imag(vel)], [2 3 1]), 'none');
+    d_bary = reshape(d_bary, 3, nheads).';
 
     % Calculate maximum step before any barycentric coordinate becomes zero
     dt = -bary_local ./ d_bary;

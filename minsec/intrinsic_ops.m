@@ -1,4 +1,4 @@
-function [G_intr, M_intr, G_nc, M_nc] = intrinsic_ops(meshData)
+function [G_intr, M_intr, G_nc, M_nc, hatGradientsIntrinsic] = intrinsic_ops(meshData)
 
 nf = meshData.nf;
 nv = meshData.nv;
@@ -21,5 +21,7 @@ G_nc = sparse(findex(:), eindex(:), -2 * hatGradientsIntrinsic(:), 2 * nf, ne);
 edgeAreas = repmat(meshData.areas, 1, 3);
 edgeAreas = accumarray(meshData.face2edge(:), edgeAreas(:), [ne 1]) / 3;
 M_nc = spdiags(edgeAreas, 0, ne, ne);
+
+hatGradientsIntrinsic = hatGradientsIntrinsic(:, [2 3 1], :); % Verts opposite edges
 
 end
